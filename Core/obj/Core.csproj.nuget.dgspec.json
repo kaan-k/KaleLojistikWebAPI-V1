@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Core\\Core.csproj": {}
+    "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Core\\Core.csproj": {}
   },
   "projects": {
-    "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Core\\Core.csproj": {
+    "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Core\\Core.csproj",
+        "projectUniqueName": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Core\\Core.csproj",
+        "projectPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Core\\Core.csproj",
         "packagesPath": "C:\\Users\\domat\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Core\\obj\\",
+        "outputPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\domat\\AppData\\Roaming\\NuGet\\NuGet.Config",

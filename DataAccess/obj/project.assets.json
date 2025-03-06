@@ -1233,11 +1233,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\DataAccess\\DataAccess.csproj",
       "projectName": "DataAccess",
-      "projectPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\DataAccess\\DataAccess.csproj",
+      "projectPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\DataAccess\\DataAccess.csproj",
       "packagesPath": "C:\\Users\\domat\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\DataAccess\\obj\\",
+      "outputPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\domat\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1255,11 +1255,11 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Core\\Core.csproj": {
-              "projectPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Core\\Core.csproj"
+            "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Core\\Core.csproj": {
+              "projectPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Core\\Core.csproj"
             },
-            "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Entities\\Entities.csproj": {
-              "projectPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\Entities\\Entities.csproj"
+            "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Entities\\Entities.csproj": {
+              "projectPath": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\Entities\\Entities.csproj"
             }
           }
         }

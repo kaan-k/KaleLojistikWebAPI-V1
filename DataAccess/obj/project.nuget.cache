@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "vVvHhrHTTc8=",
+  "dgSpecHash": "NbDvhnAv4D4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\domat\\source\\repos\\KaleLojistikAPI\\KaleLojistikWebAPI\\DataAccess\\DataAccess.csproj",
+  "projectFilePath": "C:\\Users\\domat\\source\\repos\\KaleLojistikWebAPI\\DataAccess\\DataAccess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\domat\\.nuget\\packages\\agoda.ioc.core\\1.1.144\\agoda.ioc.core.1.1.144.nupkg.sha512",
     "C:\\Users\\domat\\.nuget\\packages\\autofac\\8.2.0\\autofac.8.2.0.nupkg.sha512",
