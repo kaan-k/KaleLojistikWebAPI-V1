@@ -24,6 +24,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<WarehouseManager>().As<IWarehouseService>().InstancePerLifetimeScope();
             builder.RegisterType<Mongo_WarehouseDal>().As<IWarehouseDal>().InstancePerLifetimeScope();
             builder.RegisterType<EmployeeAssignmentManager>().As<IEmployeeAssignmentService>().InstancePerLifetimeScope();
+            builder.RegisterType<Mongo_StatusRecordDal>().As<IStatusRecordDal>().InstancePerLifetimeScope();
+            builder.RegisterType<StatusRecordManager>().As<IStatusRecordService>().InstancePerLifetimeScope();
 
 
         }

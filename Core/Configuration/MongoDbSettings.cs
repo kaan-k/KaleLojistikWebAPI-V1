@@ -11,5 +11,6 @@ namespace Core.Configuration
         public string BusinessUsersCollectionName { get; set; } = "Users";
         public string OrdersCollectionName { get; set; }
         public string ProductsCollectionName { get; set; }
+        public string StatusRecordCollectionName { get; set; } = "StatusRecords";
     }
 }
