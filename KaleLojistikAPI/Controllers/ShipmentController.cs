@@ -35,6 +35,16 @@ namespace KaleLojistikWebAPI.Controllers
             }
             return BadRequest();
         }
+        [HttpPost("UpdateStatus")]
+        public IActionResult UpdateStatus(string id, string newStatus)
+        {
+            var result = _shipmentService.UpdateStatus(id, newStatus);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
         [HttpGet("Delete")]
         public IActionResult Delete(string id)
         {
@@ -49,6 +59,16 @@ namespace KaleLojistikWebAPI.Controllers
         public IActionResult GetById(string id)
         {
             var result = _shipmentService.GetById(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+        [HttpGet("GetShipmentStatus")]
+        public IActionResult GetShipmentStatus(string id)
+        {
+            var result = _shipmentService.GetShipmentStatusHistory(id);
             if (result.Success)
             {
                 return Ok(result);

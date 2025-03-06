@@ -12,7 +12,9 @@ namespace Buisness.Abstract
     {
         IResult Add(Shipment shipment);
         IResult Update(Shipment shipment, string id);
+        IResult UpdateStatus(string shipmentId, string newStatus);
         IResult Delete(string id);
+        IDataResult<List<StatusRecord>> GetShipmentStatusHistory(string id);
 
         IDataResult<Employee> GetAssignedEmployee(string id);
         IDataResult<Shipment> GetById(string id);
