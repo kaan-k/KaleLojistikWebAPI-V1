@@ -13,15 +13,14 @@ namespace Entities.Concrete
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public string TrackingNumber { get; set; }
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
+        public string TrackingNumber { get; set; } = $"TRK{Guid.NewGuid().ToString().Substring(0, 8).ToUpper()}";
         public string SenderId{ get; set; }
         public string ReceiverName { get; set; }
         public string ReceiverPhone { get; set; }
         public string ReceiverEmail { get; set; }
         public decimal Weight { get; set; }
         public string ShipmentType { get; set; }
-        //public string PickupAddress { get; set; }
         public string DeliveryAddress { get; set; }
         public List<string>? StatusRecordIds { get; set; } = new List<string>();
         public string? AssignedEmployeeId { get; set; }

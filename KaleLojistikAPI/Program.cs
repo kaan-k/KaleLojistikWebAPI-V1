@@ -17,6 +17,8 @@ builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
     containerBuilder.RegisterModule(new AutofacBusinessModule()); //
 });
 
+builder.Services.AddCors();
+
 builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection("MongoDbSettings"));
 
 var mongoClient = new MongoClient(builder.Configuration.GetConnectionString("MongoDB"));
@@ -35,7 +37,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors(builder=>builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
