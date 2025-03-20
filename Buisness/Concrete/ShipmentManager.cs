@@ -16,6 +16,7 @@ namespace Buisness.Concrete
     {
         private readonly IShipmentDal _shipmentDal;
         private readonly IStatusRecordDal _statusRecordDal;
+        private readonly IMongoCollection<BusinessUser> _businessUsers;
         private readonly IMongoCollection<Shipment> _shipments;
         private readonly IEmployeeAssignmentService _employeeAssignmentService;
 
@@ -26,6 +27,7 @@ namespace Buisness.Concrete
             _employeeAssignmentService = employeeAssignmentService;
             _shipments = database.GetCollection<Shipment>("Shipments");
             _statusRecordDal = statusRecordDal;
+            _businessUsers = database.GetCollection<BusinessUser>("Users");
         }
 
         public IResult Add(Shipment shipment)
@@ -62,6 +64,35 @@ namespace Buisness.Concrete
             return new SuccessResult("Shipment created successfully.");
         }
 
+        public IResult ConfirmDelivery(string trackingNumber, string newStatus)
+        {
+            newStatus = "Kargo teslim edildi.";
+            var delivery = _shipments.Find(p=>p.TrackingNumber == trackingNumber).FirstOrDefault();
+
+
+             var newStatusRecord = new StatusRecord
+             {
+                 Id = ObjectId.GenerateNewId().ToString(),
+                 ShipmentId = delivery.Id,
+                 Status = newStatus,
+                 Timestamp = DateTime.UtcNow
+             };
+
+
+            _statusRecordDal.Add(newStatusRecord);
+
+
+            delivery.StatusRecordIds.Add(newStatusRecord.Id);
+
+            var filter = Builders<Shipment>.Filter.Eq(s => s.Id, delivery.Id);
+            var update = Builders<Shipment>.Update.Set(s => s.StatusRecordIds, delivery.StatusRecordIds);
+
+            _shipments.UpdateOne(filter, update);
+            return new SuccessDataResult<Shipment>(delivery, "Shipment delivered successfully.");
+
+
+        }
+
         public IResult Delete(string id)
         {
             _shipments.DeleteOne(id);
@@ -70,7 +101,8 @@ namespace Buisness.Concrete
 
         public IDataResult<List<Shipment>> GetAll()
         {
-            throw new NotImplementedException();
+            var shipment = _shipments.Find(_ => true).ToList();
+            return new SuccessDataResult<List<Shipment>>(shipment, "Tüm depolar listelendi.");
         }
 
         public IDataResult<Employee> GetAssignedEmployee(string id)
@@ -115,6 +147,13 @@ namespace Buisness.Concrete
             }
             return new SuccessDataResult<Shipment>(trackingResult, "User not found.");
 
+        }
+
+        public IDataResult<BusinessUser> GetSenderId(string id)
+        {
+            var businessUser = _businessUsers.Find(p=>p.Id==id).FirstOrDefault();
+
+            return new SuccessDataResult<BusinessUser>(businessUser, "Business user retrived successfully.");
         }
 
         public IDataResult<List<StatusRecord>> GetShipmentStatusHistory(string id)

@@ -14,9 +14,10 @@ namespace Entities.Concrete
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
+        public string Id { get; set; } = ObjectId.GenerateNewId().ToString();
         public string CompanyName { get; set; }
         public string Email { get; set; }
         public string PasswordHash { get; set; }
+        public string CompanyAddress { get; set; }
     }
 }

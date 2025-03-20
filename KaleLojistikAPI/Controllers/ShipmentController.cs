@@ -35,6 +35,18 @@ namespace KaleLojistikWebAPI.Controllers
             }
             return BadRequest();
         }
+
+        [HttpPost("ConfirmDelivery")]
+        public IActionResult ConfirmDelivery(string trackingNumber, string newStatus)
+        {
+            var result = _shipmentService.ConfirmDelivery(trackingNumber, newStatus);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+
         [HttpPost("UpdateStatus")]
         public IActionResult UpdateStatus(string id, string newStatus)
         {
@@ -54,6 +66,12 @@ namespace KaleLojistikWebAPI.Controllers
                 return Ok(result);
             }
             return BadRequest();
+        }
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
+        {
+            var result = _shipmentService.GetAll();
+            return Ok(result);
         }
         [HttpGet("GetById")]
         public IActionResult GetById(string id)
@@ -89,6 +107,16 @@ namespace KaleLojistikWebAPI.Controllers
         public IActionResult GetBySender(string id)
         {
             var result = _shipmentService.GetBySenderId(id);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest();
+        }
+        [HttpGet("GetSenderById")]
+        public IActionResult GetSenderId(string id)
+        {
+            var result = _shipmentService.GetSenderId(id);
             if (result.Success)
             {
                 return Ok(result);

@@ -57,6 +57,13 @@ namespace KaleLojistikWebAPI.Controllers
             }
             return BadRequest(result);
         }
+        [HttpGet("GetAll")]
+        public IActionResult GetAll()
+        {
+            Thread.Sleep(1000);
+            var result = _employeeService.GetAll();
+            return Ok(result);
+        }
         [HttpGet("GetWarehouse")]
         public IActionResult GetWarehouse(string id)
         {
