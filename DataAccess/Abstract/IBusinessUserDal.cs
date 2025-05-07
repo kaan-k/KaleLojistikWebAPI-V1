@@ -1,6 +1,6 @@
 ﻿using Core.DataAccess;
 using Core.DataAccess.MongoDB;
-using Entities.Concrete;
+using Core.Entities.Concrete; 
 using System;
 using System.Collections.Generic;
 using System.Linq;

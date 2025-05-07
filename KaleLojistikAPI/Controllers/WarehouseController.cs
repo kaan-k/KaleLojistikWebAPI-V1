@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 public class WarehousesController : ControllerBase
 {
     private readonly IWarehouseService _warehouseService;
+    private readonly IShipmentService _shipmentService;
 
-    public WarehousesController(IWarehouseService warehouseService)
+    public WarehousesController(IWarehouseService warehouseService, IShipmentService shipmentService)
     {
         _warehouseService = warehouseService;
+        _shipmentService = shipmentService;
     }
 
     [HttpPost("Add")]
@@ -61,6 +63,12 @@ public class WarehousesController : ControllerBase
     public IActionResult GetAll()
     {
         var result = _warehouseService.GetAll();
+        return Ok(result);
+    }
+    [HttpGet("GetAllByWarehouseId")]
+    public IActionResult GetAllByWarehouseId(string id)
+    {
+        var result = _shipmentService.GetByWarehouseId(id);
         return Ok(result);
     }
 }

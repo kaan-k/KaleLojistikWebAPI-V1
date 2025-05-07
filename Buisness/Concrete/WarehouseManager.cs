@@ -14,10 +14,12 @@ namespace Buisness.Concrete
     public class WarehouseManager : IWarehouseService
     {
         private readonly IMongoCollection<Warehouse> _collection;
+        //private readonly IShipmentService _shipmentService;
 
         public WarehouseManager(IMongoDatabase database)
         {
             _collection = database.GetCollection<Warehouse>("Warehouses");
+
         }
 
         public IResult Add(Warehouse warehouse)
@@ -34,7 +36,7 @@ namespace Buisness.Concrete
                 return new ErrorResult("Depo bulunamadı.");
             }
 
-            warehouse.Id = id; // ID değişmesin
+            warehouse.Id = id; 
             _collection.ReplaceOne(w => w.Id == id, warehouse);
             return new SuccessResult("Depo başarıyla güncellendi.");
         }
@@ -63,6 +65,17 @@ namespace Buisness.Concrete
         {
             var warehouses = _collection.Find(_ => true).ToList();
             return new SuccessDataResult<List<Warehouse>>(warehouses, "Tüm depolar listelendi.");
+        }
+
+        public IDataResult<List<Shipment>> GetShipmentsByWarehouseId(string id)
+        {
+            return new ErrorDataResult<List<Shipment>>("hata");
+            //var shipments = _shipmentService.GetByWarehouseId(id);
+            //if(shipments.Data == null)
+            //{
+            //    return new ErrorDataResult<List<Shipment>>("hata");
+            //}
+            //return new SuccessDataResult<List<Shipment>>(shipments.Data, "başarı");
         }
     }
 }

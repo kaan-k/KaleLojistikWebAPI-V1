@@ -1,4 +1,5 @@
 ﻿using Buisness.Abstract;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -32,7 +33,7 @@ namespace Buisness.Concrete
 
         public IResult Delete(string id)
         {
-            _employees.DeleteOne(id);
+            _employees.DeleteOne(p => p.Id == id);
             return new SuccessResult("31");
         }
 
@@ -68,7 +69,7 @@ namespace Buisness.Concrete
 
             var warehouse = _warehouseService.GetById(employee.WarehouseId);
             return warehouse.Success
-                ? new SuccessDataResult<Warehouse>(warehouse.Data, "Çalışanın bağlı olduğu depo getirildi.")
+                ? new SuccessDataResult<Warehouse>(warehouse.Data, "Warehouse found.")
                 : new ErrorDataResult<Warehouse>("Depo bulunamadı.");
         }
 

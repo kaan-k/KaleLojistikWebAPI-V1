@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 
-namespace Entities.Concrete
+namespace Core.Entities.Concrete
 {
     public class Employee:IEntity
     {
@@ -19,7 +19,6 @@ namespace Entities.Concrete
         public string Surname { get; set; }
         public string WarehouseId { get; set; }
         public string Role { get; set; }
-        public List<string> AssignedShipments { get; set; } = new List<string>();
 
     }
 }

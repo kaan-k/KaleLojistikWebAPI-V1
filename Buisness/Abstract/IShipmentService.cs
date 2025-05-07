@@ -1,4 +1,5 @@
-﻿using Core.Utilities.Results;
+﻿using Core.Entities.Concrete;
+using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Buisness.Abstract
         IResult Update(Shipment shipment, string id);
         IResult UpdateStatus(string shipmentId, string newStatus);
         IResult Delete(string id);
+        IResult DeleteWithTrackinNumber(string trackingNumber);
 
         IResult ConfirmDelivery(string trackingNumber, string newStatus);
 
@@ -25,5 +27,8 @@ namespace Buisness.Abstract
         IDataResult<BusinessUser> GetSenderId(string id);
         IDataResult<Shipment> GetByTrackingId(string id);
         IDataResult<List<Shipment>> GetAll();
+        IDataResult<List<ShipmentDto>> GetShipment();
+        IDataResult<List<Shipment>> GetByWarehouseId(string id);
+        IDataResult<List<Shipment>> GetDeliveredShipments();
     }
 }
