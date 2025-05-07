@@ -26,6 +26,9 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<EmployeeAssignmentManager>().As<IEmployeeAssignmentService>().InstancePerLifetimeScope();
             builder.RegisterType<Mongo_StatusRecordDal>().As<IStatusRecordDal>().InstancePerLifetimeScope();
             builder.RegisterType<StatusRecordManager>().As<IStatusRecordService>().InstancePerLifetimeScope();
+            builder.RegisterType<ComplaintManager>().As<IComplaintService>().InstancePerLifetimeScope();
+            builder.RegisterType<Mongo_ComplaintDal>().As<IComplaintDal>().InstancePerLifetimeScope();
+            builder.RegisterType<SenderManager>().As<ISenderService>().InstancePerLifetimeScope();
 
 
         }

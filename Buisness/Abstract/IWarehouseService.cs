@@ -14,6 +14,8 @@ namespace Buisness.Abstract
         IResult Update(Warehouse warehouse, string id);
         IResult Delete(string id);
 
+        IDataResult<List<Shipment>> GetShipmentsByWarehouseId(string id);
+
         IDataResult<Warehouse> GetById(string id);
         IDataResult<List<Warehouse>> GetAll();
     }

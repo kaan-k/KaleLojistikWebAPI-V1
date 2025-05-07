@@ -22,6 +22,7 @@ namespace Entities.Concrete
         public decimal Weight { get; set; }
         public string ShipmentType { get; set; }
         public string DeliveryAddress { get; set; }
+        public bool isDelivered { get; set; }
         public List<string>? StatusRecordIds { get; set; } = new List<string>();
         public string? AssignedEmployeeId { get; set; }
         public string WarehouseId { get; set; }

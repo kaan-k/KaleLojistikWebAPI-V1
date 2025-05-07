@@ -1,4 +1,5 @@
 ﻿using Buisness.Abstract;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -68,6 +69,7 @@ namespace Buisness.Concrete
         {
             newStatus = "Kargo teslim edildi.";
             var delivery = _shipments.Find(p=>p.TrackingNumber == trackingNumber).FirstOrDefault();
+            delivery.isDelivered = true;
 
 
              var newStatusRecord = new StatusRecord
@@ -85,7 +87,9 @@ namespace Buisness.Concrete
             delivery.StatusRecordIds.Add(newStatusRecord.Id);
 
             var filter = Builders<Shipment>.Filter.Eq(s => s.Id, delivery.Id);
-            var update = Builders<Shipment>.Update.Set(s => s.StatusRecordIds, delivery.StatusRecordIds);
+            var update = Builders<Shipment>.Update
+                .Set(s => s.StatusRecordIds, delivery.StatusRecordIds)
+                .Set(s => s.isDelivered, true);
 
             _shipments.UpdateOne(filter, update);
             return new SuccessDataResult<Shipment>(delivery, "Shipment delivered successfully.");
@@ -98,6 +102,18 @@ namespace Buisness.Concrete
             _shipments.DeleteOne(id);
             return new SuccessResult("yay");
         }
+
+        public IResult DeleteWithTrackinNumber(string trackingNumber)
+        {
+            var trackingResult = _shipments.Find(p => p.TrackingNumber == trackingNumber).FirstOrDefault();
+
+            if (trackingResult == null)
+                return new ErrorResult("Kargo bulunamadı");
+
+            _shipments.DeleteOne(p => p.Id == trackingResult.Id);
+            return new SuccessResult("Kargo silindi");
+        }
+
 
         public IDataResult<List<Shipment>> GetAll()
         {
@@ -134,7 +150,7 @@ namespace Buisness.Concrete
             {
                 return new ErrorDataResult<Shipment>("User not found.");
             }
-            return new SuccessDataResult<Shipment>(senderResult, "User not found.");
+            return new SuccessDataResult<Shipment>(senderResult, "User found.");
         }
 
         public IDataResult<Shipment> GetByTrackingId(string id)
@@ -145,8 +161,20 @@ namespace Buisness.Concrete
                 return new ErrorDataResult<Shipment>("User not found.");
 
             }
-            return new SuccessDataResult<Shipment>(trackingResult, "User not found.");
+            return new SuccessDataResult<Shipment>(trackingResult, "Shipment found.");
 
+        }
+
+        public IDataResult<List<Shipment>> GetByWarehouseId(string id)
+        {
+            var shipment = _shipments.Find(x=>x.WarehouseId == id).ToList();
+            return new SuccessDataResult<List<Shipment>>(shipment, "Depodaki tüm kargolar listelendi.");
+        }
+
+        public IDataResult<List<Shipment>> GetDeliveredShipments()
+        {
+            var shipment = _shipments.Find(x=>x.isDelivered == true).ToList();
+            return new SuccessDataResult<List<Shipment>>(shipment, "Tüm teslim edilen kargolar listelendi.");
         }
 
         public IDataResult<BusinessUser> GetSenderId(string id)
@@ -156,9 +184,14 @@ namespace Buisness.Concrete
             return new SuccessDataResult<BusinessUser>(businessUser, "Business user retrived successfully.");
         }
 
+        public IDataResult<List<ShipmentDto>> GetShipment()
+        {
+            return new SuccessDataResult<List<ShipmentDto>>(_shipmentDal.GetShipment());
+        }
+
         public IDataResult<List<StatusRecord>> GetShipmentStatusHistory(string id)
         {
-            var shipment = _shipments.Find(s => s.Id == id).FirstOrDefault();
+            var shipment = _shipments.Find(s => s.Id == id).ToList();
             if (shipment == null)
             {
                 return new ErrorDataResult<List<StatusRecord>>("Shipment not found.");

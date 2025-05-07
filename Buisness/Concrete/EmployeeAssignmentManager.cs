@@ -1,4 +1,5 @@
 ﻿using Buisness.Abstract;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
 using Entities.Concrete;
 using System;
@@ -43,7 +44,6 @@ namespace Buisness.Concrete
                 return null;
             }
 
-            // Çalışanı AssignedEmployeeId ile direkt sorgulayıp buluyoruz
             var returnEmp = _employeeService.GetAll()
                 .Data
                 .FirstOrDefault(e => e.Id == assignedEmployeeId);

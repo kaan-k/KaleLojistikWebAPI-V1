@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -19,14 +20,31 @@ namespace KaleLojistikWebAPI.Controllers
 
 
         [HttpPost("Add")]
-        public IActionResult Add(BusinessUser businessUser)
+        public IActionResult Add(BusinessUserDto businessUser)
         {
-            var result = _businessUserInterface.Add(businessUser);
-            if(result.Success)
+            var register = _businessUserInterface.Add(businessUser);
+            var check = _businessUserInterface.CreateAccessToken(register.Data);
+            if (!check.Success)
             {
-                return Ok(result);
+                return BadRequest(check.Message);
             }
-            return BadRequest();
+            return Ok(check);
+        }
+        [HttpPost("Login")]
+        public IActionResult Login(BusinessUserLoginDto userForLoginDto)
+        {
+            var result = _businessUserInterface.UserLogin(userForLoginDto);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+            var res = _businessUserInterface.CreateAccessToken(result.Data);
+            if (res.Success)
+            {
+                HttpContext.Response.Headers.Add("Authorization", "Bearer " + res.Data.Token);
+                return Ok(res);
+            }
+            return BadRequest(res.Message);
         }
         [HttpPost("Update")]
         public IActionResult Update(BusinessUser businessUser, string id)

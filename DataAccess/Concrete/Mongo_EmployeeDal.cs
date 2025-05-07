@@ -1,4 +1,5 @@
 ﻿using Core.Configuration;
+using Core.Entities.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Repositories;
 using Entities.Concrete;

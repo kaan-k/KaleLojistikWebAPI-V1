@@ -1,5 +1,8 @@
 ﻿using Business.Abstract;
+using Core.Entities.Concrete;
 using Core.Utilities.Results;
+using Core.Utilities.Security.Hashing;
+using Core.Utilities.Security.JWT;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using System;
@@ -13,15 +16,26 @@ namespace Business.Concrete
     public class BusinessUserManager : IBusinessUserService
     {
         private readonly IBusinessUserDal _businessUserDal;
-        public BusinessUserManager(IBusinessUserDal businessUserDal)
+        private readonly ITokenHelper _tokenHelper;
+        public BusinessUserManager(IBusinessUserDal businessUserDal, ITokenHelper tokenHelper)
         {
             _businessUserDal = businessUserDal;
+            _tokenHelper = tokenHelper;
         }
 
-        public IResult Add(BusinessUser buisnessUser)
+        public IDataResult<BusinessUser> Add(BusinessUserDto buisnessUser)
         {
-            _businessUserDal.Add(buisnessUser);
-            return new SuccessResult("yay");
+            HashingHelper.CreatePasswordHash(buisnessUser.Password, out byte[] passwordHash, out byte[] passwordSalt);
+            var user = new BusinessUser
+            {
+                Email = buisnessUser.Email,
+                PasswordHash = passwordHash,
+                PasswordSalt = passwordSalt,
+                CompanyAddress = buisnessUser.CompanyAddress,
+                CompanyName = buisnessUser.CompanyName,
+            };
+            _businessUserDal.Add(user);
+            return new SuccessDataResult<BusinessUser>(user, "Kayıt başarılı.");
         }
 
         public IResult Delete(string id)
@@ -29,10 +43,31 @@ namespace Business.Concrete
             _businessUserDal.Delete(id);
             return new SuccessResult("yay");
         }
+        public IDataResult<BusinessUser> UserLogin(BusinessUserLoginDto userForLoginDto)
+        {
+            var userToCheck = _businessUserDal.Get(x=>x.Email==userForLoginDto.Email);
+            if (userToCheck == null)
+            {
+                return new ErrorDataResult<BusinessUser>("Doğru gir sikmim");
+            }
+
+            if (!HashingHelper.VerifyPasswordHash(userForLoginDto.Password, userToCheck.PasswordHash, userToCheck.PasswordSalt))
+            {
+
+                return new ErrorDataResult<BusinessUser>("Şifre yanlış");
+            }
+
+            return new SuccessDataResult<BusinessUser>(userToCheck, "login oldu");
+        }
 
         public IDataResult<List<BusinessUser>> GetAll()
         {
             throw new NotImplementedException();
+        }
+        public IDataResult<AccessToken> CreateAccessToken(BusinessUser user)
+        {
+            var accessToken = _tokenHelper.CreateTokenForUser(user);
+            return new SuccessDataResult<AccessToken>(accessToken);
         }
 
         public IDataResult<BusinessUser> GetById(string id)
